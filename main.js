@@ -1,7 +1,10 @@
 let library = [];
 
 const books = document.querySelector("#books");
-//books.style.backgroundColor = "yellow";
+
+function popupForm() {
+    document.querySelector("#form").style.display = "flex";
+};
 
 function Book(title, author, pages, read) {
     this.title = title;
@@ -10,7 +13,7 @@ function Book(title, author, pages, read) {
     this.read = read;
 };
 
-function createBookElem(newBook) {
+function createBookElem(newBook, indexOf) {
 
     const div = document.createElement('div');
 
@@ -27,23 +30,39 @@ function createBookElem(newBook) {
     div.appendChild(pages);
 
     const toggleRead = document.createElement('button');
-    if (newBook.read) toggleRead.textContent = newBook.read
-    else toggleRead.textContent = "Unread";
-    toggleRead.addEventListener("click", function () {
-        toggleRead.style.backgroundColor = "red"
-    });
     div.appendChild(toggleRead);
 
     const remove = document.createElement('button');
     remove.textContent = "Remove";
     remove.addEventListener("click", function () {
-        remove.parentElement.remove()
+        library.splice(Number(div[indexOf]),1);
+        console.log(library);
+        remove.parentElement.remove();
     });
     div.appendChild(remove);
 
+    div.setAttribute("indexOf", `${indexOf}`)
 
     books.appendChild(div)
 
+};
+
+function toggleRead () {
+    if (library[Number(this[indexOf])].read == "read") {
+        toggleRead.textContent = "not read";
+        toggleRead.style.backgroundColor = "red"
+
+    } else {
+        toggleRead.textContent = "read";
+        toggleRead.style.backgroundColor = "#fde68a"
+    }
+}
+
+function clearInput () {
+    document.getElementById("title").value = "";
+    document.getElementById("author").value = "";
+    document.getElementById("pages").value = "";
+    document.getElementById("pages").value = "";
 };
 
 function addBook() {
@@ -55,27 +74,10 @@ function addBook() {
     const read = document.getElementById("pages").value;
 
     const newBook = new Book(title, author, pages, read);
-    console.log(newBook.title);
-    library.push(newBook);
 
-    //document.getElementById('display').textContent = newBook.title;
-    createBookElem(newBook);
+    const indexOfBook = library.push(newBook) - 1;
+
+    createBookElem(newBook, indexOfBook);
+
     clearInput()
-    //displayFirstBook();
 };
-
-function displayFirstBook() {
-    console.log(document.getElementById("author"));
-    document.getElementById("display").textContent = document.getElementById("author").value;
-};
-
-function popupForm() {
-    document.querySelector("#form").style.display = "flex";
-};
-
-function clearInput () {
-    document.getElementById("title").value = "";
-    document.getElementById("author").value = "";
-    document.getElementById("pages").value = "";
-    document.getElementById("pages").value = "";
-}
