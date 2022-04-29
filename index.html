@@ -13,12 +13,12 @@
 <body>
     <div class="controls">
         <button onclick="popupForm()">Add Book</button>
-        <!--<button onclick="displayFirstBook()">Get Book Title</button>--> 
+        <!--<button onclick="displayFirstBook()">Get Book Title</button>-->
         <!--<h3 id="display">No book in array</h3>-->
     </div>
     <div id="books" class="books"></div>
     <div id="form">
-        <h3>Please input book details</h3>
+        <h3>Add New Book</h3>
 
         <input type="text" id="title" name="first_name" placeholder="Title" required>
 
@@ -26,11 +26,13 @@
 
         <input type="number" id="pages" name="quantity" placeholder="Pages" min="1" value="0">
 
-        <label for="read">already read?</label>
-        <input type="checkbox" id="read" name="hasRead" value="read">
+        <div class = "checkbox">
+            <label for="read">already read?</label>
+            <input type="checkbox" id="read" name="hasRead" value="read">
+        </div>
 
         <button type="submit" onclick="addBook()">Submit</button>
-    <div>
+        <div>
 </body>
 
 </html>

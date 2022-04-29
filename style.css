@@ -1,46 +1,110 @@
 body {
     display: grid;
+    height: 100vh;
     grid-template: 1fr 5fr / 1fr;
-    background-color: gray;
+    font-size: 16px;
+    margin: auto;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .controls {
     display: flex;
-    height: 16vw;
+    height: clamp(10vh, 1fr, 20vh);
     justify-content: center;
     align-items: center;
+    background-color: white;
+    box-shadow: 0 4px 6px -4px rgba(72, 72, 72, 0.3);
 }
 
 #form {
     display: none;
+    flex-direction: column;
     align-items: center;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 30vmin;
-    height: 50vmin;
-    padding: min(10px, 10%);
-    flex-direction: column;
+    width: fit-content;
+    height: fit-content;
+    padding: 1.5rem;
     gap: 10px;
-    background-color: whitesmoke;
-    border: 4px solid black;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px 1px rgba(72, 72, 72, 0.3);
+}
+
+#form h3 {
+    margin: 0;
 }
 
 input {
     width: 100%;
+    height: 1.8rem;
+    background-color: #e2e8f0;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
 }
 
 .books {
     display: grid;
+    padding-top: 20px;
     grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
-    background-color: whitesmoke;
+    background-color: rgb(230, 230, 230);
 }
 
 .books > div {
-    display: block;
-    width: 100px;
-    height: 150px;
-    padding: 10px;
-    border: 4px solid black;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    width: 15rem;
+    height: fit-content;
+    gap: 1rem;
+    padding: 1rem;
+    margin: 2rem;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 1px 1px 5px 1px rgba(72, 72, 72, 0.3);
+}
+
+
+
+.books p {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0px;
+    color: rgb(26, 26, 26);
+}
+
+button {
+    height: 2.5rem;
+    width: 100%;
+    margin: 0px;
+    border-radius: 10px;
+    background-color: #fde68a;
+    border-color: #fde68a;
+    color: black;
+    font-size: 1rem;
+    font-weight: 800;
+    
+}
+
+.controls button {
+    width: 10rem;
+    background-color: #fcd34d;
+    border-color: #fcd34d;
+    
+}
+
+.checkbox {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+
+.checkbox > input {
+    width: fit-content;
 }

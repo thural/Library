@@ -14,28 +14,28 @@ function createBookElem(newBook) {
 
     const div = document.createElement('div');
 
-    const title = document.createElement('h3');
+    const title = document.createElement('p');
     title.textContent = newBook.title;
     div.appendChild(title);
 
-    const author = document.createElement('h3');
+    const author = document.createElement('p');
     author.textContent = newBook.author;
     div.appendChild(author);
 
-    const pages = document.createElement('h3');
+    const pages = document.createElement('p');
     pages.textContent = newBook.pages;
     div.appendChild(pages);
 
     const toggleRead = document.createElement('button');
     if (newBook.read) toggleRead.textContent = newBook.read
-    else toggleRead.textContent = "unread";
+    else toggleRead.textContent = "Unread";
     toggleRead.addEventListener("click", function () {
         toggleRead.style.backgroundColor = "red"
     });
     div.appendChild(toggleRead);
 
     const remove = document.createElement('button');
-    remove.textContent = "remove";
+    remove.textContent = "Remove";
     remove.addEventListener("click", function () {
         remove.parentElement.remove()
     });
@@ -45,45 +45,6 @@ function createBookElem(newBook) {
     books.appendChild(div)
 
 };
-
-function createCardTemplate() {
-    const div = document.createElement('div');
-
-    const title = document.createElement('h3');
-    title.textContent = 'title';
-    div.appendChild(title);
-
-    const author = document.createElement('h3');
-    author.textContent = 'author';
-    div.appendChild(author);
-
-    const pages = document.createElement('h3');
-    pages.textContent = 'pages';
-    div.appendChild(pages);
-
-    const toggleRead = document.createElement('button');
-    toggleRead.addEventListener("click", function () {
-        if (newBook.read == "read") {
-            toggleRead.textContent = 'read';
-            toggleRead.style.backgroundColor = "whitesmoke"
-        } else {
-            toggleRead.textContent = "unread";
-            toggleRead.style.backgroundColor = "red";
-            library[0].read = "unread"
-        }
-    });
-    div.appendChild(toggleRead);
-
-    const remove = document.createElement('button');
-    remove.addEventListener("click", function () {
-        remove.parentElement.remove()
-    });
-    div.appendChild(remove);
-
-
-    books.appendChild(div)
-};
-
 
 function addBook() {
     document.querySelector("#form").style.display = "none";
