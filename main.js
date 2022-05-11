@@ -1,110 +1,99 @@
-//array to store book objects
 let library = {};
 
-//the Book constructor
 class Book {
     constructor() {
         this.title = document.getElementById("title").value;
         this.author = document.getElementById("author").value;
         this.pages = document.getElementById("pages").value;
-        this.read = document.getElementById("read").value
+        this.read = document.getElementById("read").checked
     }
-};
 
-//selecting the grid element to dinamically append and remove child elements
-const bookGrid = document.querySelector("#books");
+    removeBook(removeBtn) {
+        delete this;
+        removeBtn.parentElement.remove()
+    }
 
-function closeForm() {
-    document.querySelector("#form").style.display = "none";
-    document.querySelector(".formBkg").style.display = "none";
+    toggleRead(readBtn) {
+
+        if (this.read) {
+            readBtn.textContent = "not read";
+            readBtn.style.backgroundColor = "lightcoral";
+            this.read = false
+        } else {
+            readBtn.textContent = "read";
+            readBtn.style.backgroundColor = "#fde68a";
+            this.read = true
+        }
+    }
+
+    //creates a book card element and appends it to book grid
+    appendBook() {
+        const index = Object.keys(library).length - 1;
+
+        const bookCard = document.createElement('div');
+        bookCard.setAttribute("index", `${index}`);
+
+        const bookTitle = document.createElement('p');
+        bookTitle.textContent = this.title;
+        bookCard.appendChild(bookTitle);
+
+        const bookAuthor = document.createElement('p');
+        bookAuthor.textContent = this.author;
+        bookCard.appendChild(bookAuthor);
+
+        const bookPages = document.createElement('p');
+        bookPages.textContent = this.pages;
+        bookCard.appendChild(bookPages);
+
+        const readBtn = document.createElement('button');
+        readBtn.textContent = this.read ? 'read' : 'not read';
+        readBtn.style.backgroundColor = this.read ? "#fde68a" : "lightcoral";
+
+        readBtn.addEventListener('click', () => this.toggleRead(readBtn));
+        bookCard.appendChild(readBtn);
+
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = "remove";
+        removeBtn.addEventListener("click", () => this.removeBook(removeBtn));
+        bookCard.appendChild(removeBtn);
+
+        const bookGrid = document.querySelector("#books");
+        bookGrid.appendChild(bookCard)
+    }
 };
 
 //makes input field visible when called by clicking on "Add Book" button
 function openForm() {
     document.querySelector(".formBkg").style.display = "block";
-    document.querySelector("#form").style.display = "flex";
+    document.querySelector("#form").style.display = "flex"
 };
 
+function closeForm() {
+    document.querySelector(".formBkg").style.display = "none";
+    document.querySelector("#form").style.display = "none"
+};
+
+// listener for esc key to close the input field
+document.addEventListener('keydown', event => {
+    if (event.key == 'Escape') closeForm()
+});
+
 //close the form when clicked on the form background
-document.querySelector(".formBkg").addEventListener('click', () => closeForm());
+document.querySelector(".formBkg").addEventListener('click', closeForm);
 
 //clears the input fields after a new book is added
 function clearInput() {
     document.getElementById("title").value = "";
     document.getElementById("author").value = "";
-    document.getElementById("pages").value = "";
-    document.getElementById("pages").value = "";
-};
-
-//creates a book card element and appends it to book grid
-function createBookCard(newBook, indexOfBook) {
-
-    const bookCard = document.createElement('div');
-    bookCard.setAttribute("index", `${indexOfBook}`);
-
-    const bookTitle = document.createElement('p');
-    bookTitle.textContent = newBook.title;
-    bookCard.appendChild(bookTitle);
-
-    const bookAuthor = document.createElement('p');
-    bookAuthor.textContent = newBook.author;
-    bookCard.appendChild(bookAuthor);
-
-    const bookPages = document.createElement('p');
-    bookPages.textContent = newBook.pages;
-    bookCard.appendChild(bookPages);
-
-    const readBtn = document.createElement('button');
-    readBtn.textContent = newBook.read;
-    readBtn.addEventListener('click', () => toggleRead(readBtn, indexOfBook));
-    bookCard.appendChild(readBtn);
-
-    const removeBtn = document.createElement('button');
-    removeBtn.textContent = "remove";
-    removeBtn.addEventListener("click", () => removeBook(removeBtn, indexOfBook));
-    bookCard.appendChild(removeBtn);
-
-    bookGrid.appendChild(bookCard)
-};
-
-function removeBook(removeBtn, indexOfBook) {
-    delete library[indexOfBook];
-    removeBtn.parentElement.remove();
-    console.log(library)
-};
-
-function toggleRead(readBtn, indexOfBook) {
-    //const getIndex = Number(readBtn.parentElement.getAttribute('index'))
-    if (library[indexOfBook].read == "read") {
-        readBtn.textContent = "not read";
-        readBtn.style.backgroundColor = "red";
-        library[indexOfBook].read = "not read";
-    } else {
-        readBtn.textContent = "read";
-        readBtn.style.backgroundColor = "#fde68a";
-        library[indexOfBook].read = "read"
-    }
+    document.getElementById("pages").value = ""
 };
 
 function addNewBook() {
-
-    closeForm()
-
     const newBook = new Book();
-
-    //push the new object into the library object and get the index
+    //push the new book object into the library object
     library[Object.keys(library).length] = newBook;
-    const indexOfBook = Object.keys(library).length - 1;
-
-    //create and append a book element based on the new book object and index
-    createBookCard(newBook, indexOfBook);
-
+    //append book element based on the properties
+    newBook.appendBook();
+    closeForm();
     clearInput()
-};
-
-// listener for esc key to close the poppup
-document.addEventListener('keydown', event => {
-    if (event.key == 'Escape') closeForm()
-});
-
-
+}
