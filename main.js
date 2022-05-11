@@ -1,12 +1,14 @@
 //array to store book objects
-let library = [];
+let library = {};
 
 //the Book constructor
-function Book() {
-    this.title = document.getElementById("title").value;
-    this.author = document.getElementById("author").value;
-    this.pages = document.getElementById("pages").value;
-    this.read = document.getElementById("read").value;
+class Book {
+    constructor() {
+        this.title = document.getElementById("title").value;
+        this.author = document.getElementById("author").value;
+        this.pages = document.getElementById("pages").value;
+        this.read = document.getElementById("read").value
+    }
 };
 
 //selecting the grid element to dinamically append and remove child elements
@@ -66,9 +68,9 @@ function createBookCard(newBook, indexOfBook) {
 };
 
 function removeBook(removeBtn, indexOfBook) {
-    library.splice(indexOfBook, 1);
-    console.log(library);
+    delete library[indexOfBook];
     removeBtn.parentElement.remove();
+    console.log(library)
 };
 
 function toggleRead(readBtn, indexOfBook) {
@@ -90,8 +92,9 @@ function addNewBook() {
 
     const newBook = new Book();
 
-    //push the new object into the library array and store the index
-    const indexOfBook = library.push(newBook) - 1;
+    //push the new object into the library object and get the index
+    library[Object.keys(library).length] = newBook;
+    const indexOfBook = Object.keys(library).length - 1;
 
     //create and append a book element based on the new book object and index
     createBookCard(newBook, indexOfBook);
